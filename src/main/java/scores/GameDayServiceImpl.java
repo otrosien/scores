@@ -19,17 +19,16 @@ public class GameDayServiceImpl implements GameDayService {
 	public GameDayServiceImpl(ScoreRepository scoreRepo) {
 		this.scoreRepo = scoreRepo;
 	}
-	
+
 	@Override
 	public List<Game> getScores() {
 		return scoreRepo.findAll();
 	}
-	
-	@Scheduled(fixedRate=15000)
+
+	@Scheduled(fixedRate=5000)
 	public void updateScores() {
 		List<Game> scores = getScores(); // fetch data
 		randomlyUpdate(scores);          // update data
-		scoreRepo.save(scores);          // save data
 	}
 	
 	// private helpers
@@ -49,13 +48,16 @@ public class GameDayServiceImpl implements GameDayService {
 
 		// adjust score
 		Game game = scores.get(gameIndex);
+		scores.remove(game);
 		if (homeOrAway > 0.5) {
 			logger.info(game.getHomeTeam() + " scored a goal against " + game.getAwayTeam());
-			game.incrementHomeTeamScore(1);
+			game = game.incrementHomeTeamScore(1);
 		} else {
 			logger.info(game.getAwayTeam() + " scored a goal against " + game.getHomeTeam());
-			game.incrementAwayTeamScore(1);
+			game = game.incrementAwayTeamScore(1);
 		}
+		scores.add(gameIndex, game);
+		scoreRepo.save(scores);
 	}
 
 }

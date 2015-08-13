@@ -11,22 +11,20 @@ public class Game implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Long id = null;
-	
+	private final Long id;
 	private final String homeTeam;
 	private final String awayTeam;
-	private int homeTeamScore = 0;
-	private int awayTeamScore = 0;
-	
-	public Game(String homeTeam, String awayTeam) {
+	private final int homeTeamScore;
+	private final int awayTeamScore;
+
+	public Game(long id, String homeTeam, String awayTeam, int homeTeamScore, int awayTeamScore) {
+		this.id = id;
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
+		this.homeTeamScore = homeTeamScore;
+		this.awayTeamScore = awayTeamScore;
 	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -34,13 +32,13 @@ public class Game implements Serializable {
 	public String getHomeTeam() {
 		return homeTeam;
 	}
-	
+
 	public int getHomeTeamScore() {
 		return homeTeamScore;
 	}
-	
-	public void incrementHomeTeamScore(int points) {
-		this.homeTeamScore += points;
+
+	public Game incrementHomeTeamScore(int points) {
+		return new Game(this.id, this.homeTeam, this.awayTeam, homeTeamScore + points, awayTeamScore);
 	}
 	
 	public String getAwayTeam() {
@@ -50,9 +48,9 @@ public class Game implements Serializable {
 	public int getAwayTeamScore() {
 		return awayTeamScore;
 	}
-	
-	public void incrementAwayTeamScore(int points) {
-		this.awayTeamScore += points;
+
+	public Game incrementAwayTeamScore(int points) {
+		return new Game(this.id, this.homeTeam, this.awayTeam, awayTeamScore + points, homeTeamScore);
 	}
 
 }

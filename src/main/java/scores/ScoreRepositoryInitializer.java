@@ -23,15 +23,16 @@ public class ScoreRepositoryInitializer {
 	// private helpers
 	public void init() {
 		List<String> teamPool = new ArrayList<String>(Arrays.asList(ALL_TEAMS));
+		List<Game> games = new ArrayList<>();
 		while(!teamPool.isEmpty()) {
 			String homeTeam = teamPool.get((int)(Math.random() * teamPool.size()));
 			teamPool.remove(homeTeam);
 			String awayTeam = teamPool.get((int)(Math.random() * teamPool.size()));
 			teamPool.remove(awayTeam);
-			Game game = new Game(homeTeam, awayTeam);
-			game.setId(nextId.incrementAndGet());
-			repo.save(game);
+			Game game = new Game(nextId.incrementAndGet(), homeTeam, awayTeam, 0, 0);
+			games.add(game);
 		}
+		repo.save(games);
 	}
 
 	private static final String[] ALL_TEAMS = {
