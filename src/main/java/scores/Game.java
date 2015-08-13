@@ -2,10 +2,15 @@ package scores;
 
 import java.io.Serializable;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.keyvalue.annotation.KeySpace;
+
+@KeySpace("game")
 public class Game implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+	@Id
 	private Long id = null;
 	
 	private final String homeTeam;

@@ -2,14 +2,10 @@ package scores;
 
 import java.util.List;
 
-public interface ScoreRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface ScoreRepository extends CrudRepository<Game, Long> {
 
 	List<Game> findAll();
-	
-	Game findOne(Long id);
-	
-	void save(List<Game> games);
-	
-	Game save(Game game);
-	
+
 }
