@@ -3,9 +3,9 @@ package scores;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.lang.SerializationUtils;
@@ -16,7 +16,7 @@ public class MapBasedScoreRepository implements ScoreRepository {
 
 	private AtomicLong nextId = new AtomicLong(1L);
 	
-	private Map<Long, Game> games = new HashMap<Long, Game>();
+	private Map<Long, Game> games = new ConcurrentHashMap<Long, Game>();
 	
 	public MapBasedScoreRepository() {
 		initializeGames();
@@ -49,7 +49,7 @@ public class MapBasedScoreRepository implements ScoreRepository {
 	// private helpers
 	
 	private void initializeGames() {
-		List<String> teamPool = new ArrayList<String>(Arrays.asList(ALL_TEAMS));		
+		List<String> teamPool = new ArrayList<String>(Arrays.asList(ALL_TEAMS));
 		while(!teamPool.isEmpty()) {
 			String homeTeam = teamPool.get((int)(Math.random() * teamPool.size()));
 			teamPool.remove(homeTeam);
@@ -68,14 +68,21 @@ public class MapBasedScoreRepository implements ScoreRepository {
 	}
 	
 	private static final String[] ALL_TEAMS = {
-		"Ravens", "Bengals", "Browns", "Steelers",
-		"Texans", "Colts", "Jaguars", "Titans",
-		"Bills", "Dolphins", "Patriots", "Jets",
-		"Broncos", "Chiefs", "Raiders", "Chargers",
-		"Bears", "Lions", "Packers", "Vikings",
-		"Falcons", "Panthers", "Saints", "Buccaneers",
-		"Cowboys", "Giants", "Eagles", "Redskins",
-		"Cardinals", "49ers", "Seahawks", "Rams"
+		"FC Augsburg","Hertha BSC", "Werder Bremen",
+		"SV Darmstadt 98", "Borussia Dortmund",
+		"Eintracht Frankfurt",
+		"Hamburger SV",
+		"Hannover 96",
+		"TSG 1899 Hoffenheim",
+		"FC Ingolstadt 04",
+		"1. FC Köln",
+		"Bayer 04 Leverkusen",
+		"1. FSV Mainz 05",
+		"Borussia Mönchengladbach",
+		"FC Bayern München",
+		"FC Schalke 04",
+		"VfB Stuttgart",
+		"VfL Wolfsburg",
 	};
 
 }

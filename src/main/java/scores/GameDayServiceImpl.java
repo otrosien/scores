@@ -25,7 +25,7 @@ public class GameDayServiceImpl implements GameDayService {
 		return scoreRepo.findAll();
 	}
 	
-	@Scheduled(fixedRate=5000)
+	@Scheduled(fixedRate=15000)
 	public void updateScores() {
 		List<Game> scores = getScores(); // fetch data
 		randomlyUpdate(scores);          // update data
@@ -43,22 +43,18 @@ public class GameDayServiceImpl implements GameDayService {
 	private void randomlyUpdate(List<Game> scores) {
 		// choose a game to update
 		int gameIndex = (int)(Math.random() * scores.size());
-		
-		// choose either a touchdown or a field goal
-		int points = Math.random() > 0.6 ? 7 : 3;
-		String pointType = points == 3 ? "field goal" : "touchdown";
-		
+
 		// choose either home or away team
 		double homeOrAway = Math.random();
-		
+
 		// adjust score
 		Game game = scores.get(gameIndex);
 		if (homeOrAway > 0.5) {
-			logger.info("The " + game.getHomeTeam() + " scored a " + pointType + " against the " + game.getAwayTeam());
-			game.incrementHomeTeamScore(points);
+			logger.info(game.getHomeTeam() + " scored a goal against " + game.getAwayTeam());
+			game.incrementHomeTeamScore(1);
 		} else {
-			logger.info("The " + game.getAwayTeam() + " scored a " + pointType + " against the " + game.getHomeTeam());
-			game.incrementAwayTeamScore(points);
+			logger.info(game.getAwayTeam() + " scored a goal against " + game.getHomeTeam());
+			game.incrementAwayTeamScore(1);
 		}
 	}
 

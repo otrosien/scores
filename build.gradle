@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.1.4.RELEASE'
+        springBootVersion = '1.2.4.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -19,8 +19,8 @@ jar {
     baseName = 'scores'
     version =  '0.0.1-SNAPSHOT'
 }
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
 	mavenLocal()
@@ -36,15 +36,14 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 	compile("org.springframework.sync:spring-sync:0.5.0.BUILD-SNAPSHOT")
     compile("org.springframework:spring-messaging")
-    
+
     compile("org.aspectj:aspectjweaver:1.8.1")
-    
+
     testCompile("org.springframework.boot:spring-boot-starter-test")
 
     compile("org.webjars:jquery:2.0.3-1")
     compile("org.webjars:sockjs-client:0.3.4")
     compile("org.webjars:stomp-websocket:2.3.0")
-    
 }
 
 eclipse {
@@ -54,6 +53,6 @@ eclipse {
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+wrapper {
+    gradleVersion = '2.6'
 }
